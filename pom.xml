@@ -18,6 +18,7 @@
     <modules>
         <module>logger</module>
         <module>web-common</module>
+        <module>data-engine</module>
     </modules>
 
     <properties>
