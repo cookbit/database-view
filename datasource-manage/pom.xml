@@ -9,8 +9,8 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>data-engine</artifactId>
-    <name>data-engine</name>
+    <artifactId>datasource-manage</artifactId>
+    <name>datasource-manage</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

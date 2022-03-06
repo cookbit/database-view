@@ -18,6 +18,8 @@
     <modules>
         <module>logger</module>
         <module>web-common</module>
+        <module>datasource-manage</module>
+        <module>model</module>
         <module>data-engine</module>
     </modules>
 
@@ -46,12 +48,18 @@
             <dependency>
                 <groupId>com.github.cookbit</groupId>
                 <artifactId>logger</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.github.cookbit</groupId>
                 <artifactId>web-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.cookbit</groupId>
+                <artifactId>model</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -65,12 +73,6 @@
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>${mybatis.plus.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-boot-starter-test</artifactId>
                 <version>${mybatis.plus.version}</version>
             </dependency>
 
