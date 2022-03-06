@@ -16,8 +16,15 @@
 
 package com.github.cookbit.controller;
 
+import com.github.cookbit.model.datasource.DatasourceQueryRequest;
+import com.github.cookbit.service.IDatasourceConfigService;
+import com.github.jinzhaosn.common.model.ResultVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -27,8 +34,20 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2022年03月06日
  */
 @RestController
+@RequestMapping("/v1/datasource")
 public class DatasourceConfigController {
     private static final Logger logger = LoggerFactory.getLogger(DatasourceConfigController.class);
+    @Autowired
+    IDatasourceConfigService datasourceService;
 
-
+    /**
+     * 查询数据源配置
+     *
+     * @param query 查询参数
+     * @return 数据源列表
+     */
+    @PostMapping("list")
+    public ResultVo<?> queryDatasourceList(@RequestBody DatasourceQueryRequest query) {
+        return ResultVo.success();
+    }
 }
