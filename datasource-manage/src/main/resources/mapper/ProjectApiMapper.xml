@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.cookbit.mapper.ProjectApiMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.github.cookbit.entity.ProjectApi">
+        <id column="id" property="id" />
+        <result column="api_code" property="apiCode" />
+        <result column="api_name" property="apiName" />
+        <result column="project_code" property="projectCode" />
+        <result column="project_name" property="projectName" />
+        <result column="datasource_code" property="datasourceCode" />
+        <result column="sql_statement" property="sqlStatement" />
+        <result column="create_time" property="createTime" />
+        <result column="create_user" property="createUser" />
+        <result column="modify_time" property="modifyTime" />
+        <result column="modify_user" property="modifyUser" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, api_code, api_name, project_code, project_name, datasource_code, sql_statement, create_time, create_user, modify_time, modify_user
+    </sql>
+
+</mapper>
