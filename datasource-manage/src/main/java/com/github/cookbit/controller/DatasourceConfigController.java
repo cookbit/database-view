@@ -16,6 +16,10 @@
 
 package com.github.cookbit.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.cookbit.dao.DatasourceConfigDao;
+import com.github.cookbit.entity.DatasourceConfig;
+import com.github.cookbit.model.datasource.DatasourceAddRequest;
 import com.github.cookbit.model.datasource.DatasourceQueryRequest;
 import com.github.cookbit.service.IDatasourceConfigService;
 import com.github.jinzhaosn.common.model.ResultVo;
@@ -26,6 +30,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * 数据源配置
@@ -43,11 +49,27 @@ public class DatasourceConfigController {
     /**
      * 查询数据源配置
      *
-     * @param query 查询参数
+     * @param queryRequest 查询参数
      * @return 数据源列表
      */
     @PostMapping("list")
-    public ResultVo<?> queryDatasourceList(@RequestBody DatasourceQueryRequest query) {
-        return ResultVo.success();
+    public ResultVo<?> listDatasourceConfigs(@RequestBody DatasourceQueryRequest queryRequest) {
+        logger.info("list datasource configs param: [{}]", queryRequest);
+        Page<DatasourceConfig> configs = datasourceService.listDatasourceConfigs(queryRequest);
+        logger.info("datasource list: [{}]", configs);
+        return ResultVo.success("success", configs);
+    }
+
+    /**
+     * 新增数据源配置
+     *
+     * @param addRequest 添加数据源配置请求
+     * @return 添加配置的结果
+     */
+    @PostMapping("add")
+    public ResultVo<?> addDatasourceConfig(@RequestBody DatasourceAddRequest addRequest) {
+        logger.info("add datasource config param: [{}]", addRequest);
+        boolean ret = datasourceService.addDatasourceConfig(addRequest);
+        return ret ? ResultVo.success() : ResultVo.fail();
     }
 }
