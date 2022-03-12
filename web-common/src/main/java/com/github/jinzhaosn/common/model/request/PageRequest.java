@@ -14,23 +14,37 @@
  * limitations under the License.
  */
 
-package com.github.cookbit.model.datasource;
+package com.github.jinzhaosn.common.model.request;
 
 import lombok.Data;
 
-import java.util.Date;
+import static java.util.Objects.isNull;
 
 /**
- * 数据源查询请求
+ * 页请求
  *
  * @auther 961374431@qq.com
- * @date 2022年03月06日
+ * @date 2022年03月12日
  */
 @Data
-public class DatasourceQueryRequest {
-    private String keyword; // 关键字
-    private Date startTime; // 开始时间
-    private Date endTime; // 结束时间
-    private Integer pageSize; // 分页大小
+public class PageRequest implements IRequest {
+    private Integer pageSize; // 页大小
     private Integer pageNum; // 页码
+
+    /**
+     * 主要对页大小进行校验并纠正
+     *
+     * @return 成功
+     */
+    @Override
+    public boolean validate() {
+        if (isNull(pageNum) || pageNum < 0) {
+            pageNum = 1;
+        }
+
+        if (isNull(pageSize) || pageSize < 0) {
+            pageSize = 15;
+        }
+        return true;
+    }
 }

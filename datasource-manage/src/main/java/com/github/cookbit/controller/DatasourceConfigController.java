@@ -17,21 +17,20 @@
 package com.github.cookbit.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.cookbit.dao.DatasourceConfigDao;
 import com.github.cookbit.entity.DatasourceConfig;
 import com.github.cookbit.model.datasource.DatasourceAddRequest;
+import com.github.cookbit.model.datasource.DatasourceModifyRequest;
 import com.github.cookbit.model.datasource.DatasourceQueryRequest;
 import com.github.cookbit.service.IDatasourceConfigService;
 import com.github.jinzhaosn.common.model.ResultVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * 数据源配置
@@ -70,6 +69,32 @@ public class DatasourceConfigController {
     public ResultVo<?> addDatasourceConfig(@RequestBody DatasourceAddRequest addRequest) {
         logger.info("add datasource config param: [{}]", addRequest);
         boolean ret = datasourceService.addDatasourceConfig(addRequest);
+        return ret ? ResultVo.success() : ResultVo.fail();
+    }
+
+    /**
+     * 删除数据源配置
+     *
+     * @param configId 数据源ID
+     * @return 是否成功
+     */
+    @PostMapping("delete/{configId}")
+    public ResultVo<?> deleteDatasourceConfig(@PathVariable("configId") String configId) {
+        logger.info("delete datasource by id: [{}]", configId);
+        boolean ret = datasourceService.deleteDatasource(configId);
+        return ret ? ResultVo.success() : ResultVo.fail();
+    }
+
+    /**
+     * 更改数据源配置
+     *
+     * @param request 数据配置更新请求
+     * @return 是否成功
+     */
+    @PostMapping("update")
+    public ResultVo<?> updateDatasource(@RequestBody DatasourceModifyRequest request) {
+        logger.info("datasource config update param: [{}]", request);
+        boolean ret = datasourceService.updateDatasourceConfig(request);
         return ret ? ResultVo.success() : ResultVo.fail();
     }
 }

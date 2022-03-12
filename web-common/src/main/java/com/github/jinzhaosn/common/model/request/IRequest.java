@@ -14,23 +14,22 @@
  * limitations under the License.
  */
 
-package com.github.cookbit.model.datasource;
-
-import lombok.Data;
-
-import java.util.Date;
+package com.github.jinzhaosn.common.model.request;
 
 /**
- * 数据源查询请求
+ * 请求接口
  *
  * @auther 961374431@qq.com
- * @date 2022年03月06日
+ * @date 2022年03月12日
  */
-@Data
-public class DatasourceQueryRequest {
-    private String keyword; // 关键字
-    private Date startTime; // 开始时间
-    private Date endTime; // 结束时间
-    private Integer pageSize; // 分页大小
-    private Integer pageNum; // 页码
+public interface IRequest {
+
+    /**
+     * 验证参数
+     *
+     * @return 是否成功
+     */
+    default boolean validate(){
+        return true;
+    }
 }

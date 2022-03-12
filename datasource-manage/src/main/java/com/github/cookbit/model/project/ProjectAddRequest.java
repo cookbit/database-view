@@ -14,23 +14,19 @@
  * limitations under the License.
  */
 
-package com.github.cookbit.model.datasource;
+package com.github.cookbit.model.project;
 
+import com.github.cookbit.entity.ProjectDatasource;
 import lombok.Data;
-
-import java.util.Date;
+import lombok.ToString;
 
 /**
- * 数据源查询请求
+ * 项目新增请求
  *
  * @auther 961374431@qq.com
- * @date 2022年03月06日
+ * @date 2022年03月12日
  */
 @Data
-public class DatasourceQueryRequest {
-    private String keyword; // 关键字
-    private Date startTime; // 开始时间
-    private Date endTime; // 结束时间
-    private Integer pageSize; // 分页大小
-    private Integer pageNum; // 页码
+@ToString(callSuper = true)
+public class ProjectAddRequest extends ProjectDatasource {
 }
