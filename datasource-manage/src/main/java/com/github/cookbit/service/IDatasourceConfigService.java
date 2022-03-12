@@ -19,6 +19,7 @@ package com.github.cookbit.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.cookbit.entity.DatasourceConfig;
 import com.github.cookbit.model.datasource.DatasourceAddRequest;
+import com.github.cookbit.model.datasource.DatasourceModifyRequest;
 import com.github.cookbit.model.datasource.DatasourceQueryRequest;
 
 /**
@@ -43,4 +44,20 @@ public interface IDatasourceConfigService {
      * @return 更新
      */
     boolean addDatasourceConfig(DatasourceAddRequest request);
+
+    /**
+     * 删除数据源配置
+     *
+     * @param configId 配置ID
+     * @return 是否成功
+     */
+    boolean deleteDatasource(String configId);
+
+    /**
+     * 更新数据源配置
+     *
+     * @param request 更新请求
+     * @return 是否成功
+     */
+    boolean updateDatasourceConfig(DatasourceModifyRequest request);
 }
