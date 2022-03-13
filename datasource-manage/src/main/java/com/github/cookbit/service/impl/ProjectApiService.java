@@ -16,6 +16,8 @@
 
 package com.github.cookbit.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.cookbit.dao.ProjectApiDao;
 import com.github.cookbit.entity.ProjectApi;
@@ -28,7 +30,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
+
+import static java.util.Objects.nonNull;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 /**
  * 项目功能函数API服务
@@ -50,8 +56,35 @@ public class ProjectApiService implements IProjectApiService {
      */
     @Override
     public Page<ProjectApi> listProjectApis(ProjectApiQueryRequest request) {
+        Page<ProjectApi> page = Page.of(request.getPageNum(), request.getPageSize());
+        LambdaQueryWrapper<ProjectApi> queryWrapper = projectApiQueryWrapper(request);
+        return request.selectPage(page, queryWrapper);
+    }
 
-        return null;
+    private LambdaQueryWrapper<ProjectApi> projectApiQueryWrapper(ProjectApiQueryRequest request) {
+        String apiCode = request.getApiCode();
+        String apiName = request.getApiName();
+        String projectCode = request.getProjectCode();
+        String projectName = request.getProjectName();
+        String datasourceCode = request.getDatasourceCode();
+        String keyword = request.getKeyword();
+        Date startTime = request.getStartTime();
+        Date endTime = request.getEndTime();
+
+        return Wrappers.<ProjectApi>lambdaQuery()
+                .eq(ProjectApi::getEnable, true)
+                .ge(nonNull(startTime), ProjectApi::getCreateTime, startTime)
+                .le(nonNull(endTime), ProjectApi::getCreateTime, endTime)
+                .eq(isNotBlank(apiCode), ProjectApi::getApiCode, apiCode)
+                .eq(isNotBlank(apiName), ProjectApi::getApiName, apiName)
+                .eq(isNotBlank(projectCode), ProjectApi::getProjectCode, projectCode)
+                .eq(isNotBlank(projectName), ProjectApi::getProjectName, projectName)
+                .eq(isNotBlank(datasourceCode), ProjectApi::getDatasourceCode, datasourceCode)
+                .and(isNotBlank(keyword), cond -> cond.like(ProjectApi::getApiCode, keyword)
+                        .or().like(ProjectApi::getApiName, keyword)
+                        .or().like(ProjectApi::getProjectCode, keyword)
+                        .or().like(ProjectApi::getProjectName, keyword)
+                        .or().like(ProjectApi::getDatasourceCode, keyword));
     }
 
     /**
