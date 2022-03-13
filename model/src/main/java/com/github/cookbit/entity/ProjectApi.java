@@ -19,6 +19,7 @@ package com.github.cookbit.entity;
 import java.io.Serializable;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.util.Date;
@@ -69,6 +70,11 @@ public class ProjectApi extends Model<ProjectApi> implements Serializable {
      * SQL语句
      */
     private String sqlStatement;
+    /**
+     * 是否有效API
+     */
+    @TableLogic
+    private Boolean enable;
     /**
      * 创建时间
      */
