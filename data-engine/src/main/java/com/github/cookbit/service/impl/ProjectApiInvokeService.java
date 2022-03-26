@@ -16,12 +16,23 @@
 
 package com.github.cookbit.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.github.cookbit.dao.DatasourceConfigDao;
+import com.github.cookbit.dao.ProjectApiDao;
+import com.github.cookbit.entity.DatasourceConfig;
+import com.github.cookbit.entity.ProjectApi;
 import com.github.cookbit.model.InvokeApiCodeParam;
 import com.github.cookbit.service.IProjectApiInvokeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
+
+import static com.github.jinzhaosn.common.util.CheckUtil.checkTrue;
 
 /**
  * 项目API调用服务
@@ -32,6 +43,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProjectApiInvokeService implements IProjectApiInvokeService {
     private static final Logger logger = LoggerFactory.getLogger(ProjectApiInvokeService.class);
+    @Autowired
+    DatasourceConfigDao datasourceConfigDao;
+    @Autowired
+    ProjectApiDao apiDao;
+
 
     /**
      * API调用
@@ -41,6 +57,20 @@ public class ProjectApiInvokeService implements IProjectApiInvokeService {
      */
     @Override
     public JSONObject invokeByApiCode(InvokeApiCodeParam param) {
-        return null;
+        // 查找API配置
+        LambdaQueryWrapper<ProjectApi> apiQueryWrapper =
+                Wrappers.<ProjectApi>lambdaQuery().eq(ProjectApi::getApiCode, param.getApiCode());
+        ProjectApi projectApi = apiDao.getOne(apiQueryWrapper);
+        logger.info("query project api code: [{}] api: [{}]", param.getApiCode(), projectApi);
+        checkTrue(Objects.nonNull(projectApi), "can't find project api");
+
+        // 查找归属数据源
+        String datasourceCode = projectApi.getDatasourceCode();
+        LambdaQueryWrapper<DatasourceConfig> datasourceQueryWrapper =
+                Wrappers.<DatasourceConfig>lambdaQuery().eq(DatasourceConfig::getSourceCode, datasourceCode);
+        DatasourceConfig datasourceConfig = datasourceConfigDao.getOne(datasourceQueryWrapper);
+        checkTrue(Objects.nonNull(datasourceConfig), "can't find datasource config");
+
+        return DataStatementExecutor.execute(datasourceConfig, projectApi.getSqlStatement(), param.getParam());
     }
 }

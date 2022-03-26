@@ -37,7 +37,7 @@
         <spring.cloud.openfeign.version>3.1.0</spring.cloud.openfeign.version>
         <spring.cloud.loadbalancer.version>3.1.0</spring.cloud.loadbalancer.version>
         <spring.boot.amqp.version>2.6.2</spring.boot.amqp.version>
-        <ehcache.version>3.8.1</ehcache.version>
+        <ehcache.version>3.10.0</ehcache.version>
         <fastjson.version>1.2.79</fastjson.version>
         <minio.version>8.3.7</minio.version>
         <commons.pool2.version>2.11.1</commons.pool2.version>
@@ -132,11 +132,6 @@
                 <artifactId>commons-codec</artifactId>
                 <version>${apache.commons.codec.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-pool2</artifactId>
-                <version>${commons.pool2.version}</version>
-            </dependency>
 
             <dependency>
                 <groupId>org.mapstruct</groupId>
@@ -162,11 +157,6 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-loadbalancer</artifactId>
                 <version>${spring.cloud.loadbalancer.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.ehcache</groupId>
-                <artifactId>ehcache</artifactId>
-                <version>${ehcache.version}</version>
             </dependency>
 
             <dependency>
@@ -209,7 +199,7 @@
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
-				<filtering>false</filtering>
+                <filtering>false</filtering>
                 <includes>
                     <include>**/*</include>
                 </includes>
@@ -282,4 +272,16 @@
             </plugin>
         </plugins>
     </build>
+    <repositories>
+        <!--<repository>
+            <id>spring</id>
+            <url>https://maven.aliyun.com/repository/spring</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>-->
+    </repositories>
 </project>
